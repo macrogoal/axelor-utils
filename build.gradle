@@ -3,6 +3,8 @@ import com.axelor.gradle.support.ChangelogSupport
 plugins {
     id 'com.axelor.app'
     id 'com.adarshr.test-logger' version '4.0.0'
+    id 'maven-publish'
+    id 'jacoco'
 }
 
 apply from: './gradle/version.gradle'
@@ -33,27 +35,27 @@ axelor {
 }
 
 dependencies {
-    implementation 'commons-net:commons-net:3.11.1'
+    implementation 'commons-net:commons-net:3.12.0'
     implementation 'commons-io:commons-io:2.20.0'
-    implementation 'org.apache.commons:commons-lang3:3.18.0'
-    implementation 'org.apache.pdfbox:pdfbox:3.0.5'
+    implementation 'org.apache.commons:commons-lang3:3.19.0'
+    implementation 'org.apache.pdfbox:pdfbox:3.0.6'
     implementation 'org.apache.commons:commons-text:1.14.0'
 
-    implementation 'com.jcraft:jsch:0.1.55'
+    implementation 'com.github.mwiede:jsch:2.27.3'
 
     implementation 'jakarta.xml.ws:jakarta.xml.ws-api:4.0.2'
-    implementation 'org.eclipse.persistence:org.eclipse.persistence.moxy:4.0.7'
+    implementation 'org.eclipse.persistence:org.eclipse.persistence.moxy:4.0.8'
     implementation 'org.apache.commons:commons-csv:1.14.1'
 
     implementation 'org.reflections:reflections:0.10.2'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.20.0'
 
     implementation "com.axelor:axelor-test:${aopVersion}"
 
-    compileOnly 'org.projectlombok:lombok:1.18.38'
-    annotationProcessor 'org.projectlombok:lombok:1.18.38'
-    testCompileOnly 'org.projectlombok:lombok:1.18.38'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.38'
+    compileOnly 'org.projectlombok:lombok:1.18.42'
+    annotationProcessor 'org.projectlombok:lombok:1.18.42'
+    testCompileOnly 'org.projectlombok:lombok:1.18.42'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.42'
 }
 
 changelog {
@@ -67,8 +69,6 @@ changelog {
 //
 // Publish
 //
-
-apply plugin: 'maven-publish'
 
 ext {
     mavenUsername = project.findProperty('addonsMavenUsername')
@@ -95,10 +95,8 @@ publishing {
 * Jacoco
 */
 
-apply plugin: 'jacoco'
-
 jacoco {
-    toolVersion = '0.8.13'
+    toolVersion = '0.8.14'
 }
 
 jacocoTestReport {
@@ -111,7 +109,8 @@ test {
     useJUnitPlatform()
     // report is always generated after tests run
     finalizedBy jacocoTestReport
-    maxHeapSize = '1G'
+    maxHeapSize = '2G'
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 }
 
 jacocoTestReport {

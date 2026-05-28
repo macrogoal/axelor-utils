@@ -1,7 +1,7 @@
 /*
  * Axelor Business Solutions
  *
- * Copyright (C) 2025 Axelor (<http://axelor.com>).
+ * Copyright (C) 2026 Axelor (<http://axelor.com>).
  *
  * This program is free software: you can redistribute it and/or  modify
  * it under the terms of the GNU Affero General Public License, version 3,
@@ -77,8 +77,8 @@ public final class PdfHelper {
    */
   public static String getFileLinkFromPdfFile(File file, String fileName) {
 
-    String fileLink = "ws/files/report/" + file.getName();
-    fileLink += "?name=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8);
+    String fileLink = "ws/files/report?link=" + file.getName();
+    fileLink += "&?name=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8);
     return fileLink;
   }
 

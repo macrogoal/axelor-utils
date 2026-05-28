@@ -1,7 +1,7 @@
 /*
  * Axelor Business Solutions
  *
- * Copyright (C) 2025 Axelor (<http://axelor.com>).
+ * Copyright (C) 2026 Axelor (<http://axelor.com>).
  *
  * This program is free software: you can redistribute it and/or  modify
  * it under the terms of the GNU Affero General Public License, version 3,
@@ -120,7 +120,6 @@ public class MassUpdateHelper {
 
   private static ParallelTransactionExecutor getExecutor() {
     final String tenantId = TenantResolver.currentTenantIdentifier();
-    final String tenantHost = TenantResolver.currentTenantHost();
-    return new ParallelTransactionExecutor(tenantId, tenantHost);
+    return new ParallelTransactionExecutor(tenantId);
   }
 }
